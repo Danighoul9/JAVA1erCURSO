@@ -79,7 +79,7 @@ public class NotificacionRedSocial extends Notificacion{
 
     @Override
     public String getIcono() {
-        return "\uD83C\uDF10";
+        return "\uD83C\uDF10" + getIconoInteraccion();
     }
 
     @Override
