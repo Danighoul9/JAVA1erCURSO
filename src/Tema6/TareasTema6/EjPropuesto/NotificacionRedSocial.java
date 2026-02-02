@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 public class NotificacionRedSocial extends Notificacion{
 
-
-
     enum TipoInteraccion{
         LIKE,
         COMMENT,
@@ -18,14 +16,16 @@ public class NotificacionRedSocial extends Notificacion{
     private String urlPublicacion;
 
     public NotificacionRedSocial(String titulo, String mensaje, String usuario, LocalDateTime fecha,
-                                 boolean leida, String nombreUsuarioOrigen, String urlPublicacion) {
+                                 boolean leida,TipoInteraccion tipoInteraccion, String nombreUsuarioOrigen, String urlPublicacion) {
         super(titulo, mensaje, usuario, fecha, leida);
+        this.tipoInteraccion = tipoInteraccion;
         this.nombreUsuarioOrigen = nombreUsuarioOrigen;
         this.urlPublicacion = urlPublicacion;
     }
 
     public NotificacionRedSocial(NotificacionRedSocial otro) {
         super(otro);
+        this.tipoInteraccion = otro.tipoInteraccion;
         this.nombreUsuarioOrigen = otro.nombreUsuarioOrigen;
         this.urlPublicacion = otro.urlPublicacion;
     }
@@ -79,19 +79,17 @@ public class NotificacionRedSocial extends Notificacion{
 
     @Override
     public String getIcono() {
-        return "\uD83C\uDF10" + getIconoInteraccion();
+        return "\uD83C\uDF10 " + getIconoInteraccion();
     }
 
     @Override
     public int getPrioridad() {
         if (this.tipoInteraccion == TipoInteraccion.LIKE){
             return 1;
-        }else if (this.tipoInteraccion == TipoInteraccion.COMMENT){
+        }else if (this.tipoInteraccion == TipoInteraccion.COMMENT || this.tipoInteraccion == TipoInteraccion.SHARE){
             return 2;
-        }else if (this.tipoInteraccion == TipoInteraccion.SHARE) {
-            return 3;
         }else {
-            return 4;
+            return 3;
         }
     }
 

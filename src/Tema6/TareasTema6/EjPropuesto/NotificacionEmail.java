@@ -50,7 +50,8 @@ public class NotificacionEmail extends Notificacion{
     @Override
     public void enviar() {
         //De: ,Asunto: ,Mensaje: , Adjuntos:
-        System.out.printf("De " + usuario);
+        System.out.printf("Email de " + remitente);
+        System.out.printf("Para " + usuario);
         System.out.println("Asunto: " + titulo);
         System.out.println("Mensaje: " + mensaje);
         System.out.println("Adjuntos: " + this.tieneAdjuntos);
@@ -64,9 +65,9 @@ public class NotificacionEmail extends Notificacion{
     @Override
     public int getPrioridad() {
         if (tieneAdjuntos){
-            return 1;
-        }else {
             return 2;
+        }else {
+            return 1;
         }
     }
 }

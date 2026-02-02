@@ -79,9 +79,7 @@ public class Granja {
      * imprimirDatosGranja(): muestra el nombre, la ubicación y el total de horas de operación.
      * @return
      */
-    protected ArrayList <Maquina> imprimirDatosGranja(){
 
-    }
 
     /**
      * addMaquina(): permite añadir una máquina a la granja.

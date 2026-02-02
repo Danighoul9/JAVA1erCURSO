@@ -109,8 +109,8 @@ public abstract class Notificacion implements Notificable {
 
     //Metodos propios
 
-    public boolean marcarComoLeida(){
-        return true;
+    public void marcarComoLeida(){
+        this.leida = true;
     }
 
     //muestra título, fecha, estado y usuario destinatario
