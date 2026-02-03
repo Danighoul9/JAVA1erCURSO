@@ -172,7 +172,7 @@ public class Prueba {
                 case 6 ->{
                     IO.println("Introduzca el identificador del jugador: " );
                     int resId = sc.nextInt();
-                    espada_Sagrada.buscarJugadorPorId(resId);
+                    System.out.println(espada_Sagrada.buscarJugadorPorId(resId));
                 }
 
                 case 7 -> IO.println("GRACIAS POR USAR NUESTRO PROGRAMA");
