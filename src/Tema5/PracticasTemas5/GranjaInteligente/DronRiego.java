@@ -17,18 +17,13 @@ public class DronRiego extends Maquina {
     private Integer capacidadLitros;
     private  float alcanceMetros;
 
-    public DronRiego(Integer idMaquina, String modelo, Integer estado,
+    public DronRiego(String modelo, Integer estado,
                      float horasUso, Integer capacidadLitros, float alcanceMetros) {
-        super(idMaquina, modelo, estado, horasUso);
+        super(modelo, estado, horasUso);
         this.capacidadLitros = capacidadLitros;
         this.alcanceMetros = alcanceMetros;
     }
 
-    public DronRiego(DronRiego otra) {
-        super(otra);
-        this.capacidadLitros = otra.capacidadLitros;
-        this.alcanceMetros = otra.alcanceMetros;
-    }
 
     public Integer getCapacidadLitros() {
         return capacidadLitros;

@@ -88,9 +88,15 @@ public class Partida {
 
         Monstruo enemigo = this.enemigos.get(0);
 
-        int daño = jugador.golpear(enemigo);
-        System.out.println(this.jugador.getNombre() + " golpea a " + enemigo.getNombre() +
-                " causando " + daño + " de daño");
+        jugador.golpear(enemigo);
+        if (this.jugador.getArmaDerecha() != null){
+            System.out.println(this.jugador.getNombre() + " golpea a " + enemigo.getNombre() +
+                    " causando " + jugador.getArmaDerecha().getPuntosD() + " de daño");
+        } else if (this.jugador.getArmaDerecha() != null) {
+            System.out.println(this.jugador.getNombre() + " golpea a " + enemigo.getNombre() +
+                    " causando " + jugador.getArmaIzquierda().getPuntosD() + " de daño");
+        }
+
 
         if (enemigo.getSalud() <= 0) {
             System.out.println("X Enemigo " + enemigo.getNombre() + " derrotado X : ");
@@ -114,8 +120,8 @@ public class Partida {
 
         Monstruo enemigo = enemigos.get(0);
 
-        int daño = enemigo.golpear(jugador);
-        System.out.println(enemigo.getNombre() + " golpea al jugador causando " + daño + " de daño");
+        enemigo.golpear(jugador);
+        System.out.println(enemigo.getNombre() + " golpea al jugador causando " + enemigo.getPuntosD() + " de daño");
 
         if (jugador.getSalud() <= 0) {
             System.out.println("El jugador ha muerto. FIN DE LA PARTIDA");

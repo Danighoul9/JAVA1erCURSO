@@ -109,7 +109,7 @@ public abstract class Personaje {
     /**
      * ● Un método golpear
      */
-    public abstract int golpear(Personaje personaje);
+    public abstract void golpear(Personaje personaje);
 
 
 }

@@ -97,7 +97,9 @@ public class Equipo {
         for (Jugador j: jugadores){
             acumuladorPuntos += j.getPuntos();
         }
-        return acumuladorPuntos;
+        this.totalPuntos += acumuladorPuntos;
+
+        return this.totalPuntos;
     }
 
     /**

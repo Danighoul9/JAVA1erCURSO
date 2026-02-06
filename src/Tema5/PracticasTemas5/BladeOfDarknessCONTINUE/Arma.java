@@ -39,6 +39,7 @@ public class Arma {
     public Arma(Arma otra) {
         this.nombre = otra.nombre;
         this.puntosD = otra.puntosD;
+        this.tipo = otra.tipo;
         this.dosManos = otra.dosManos;
     }
 

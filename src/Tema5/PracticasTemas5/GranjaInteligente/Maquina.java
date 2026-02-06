@@ -1,5 +1,7 @@
 package Tema5.PracticasTemas5.GranjaInteligente;
 
+import EjerciciosPuntuables.Tema5.Entidades.Jugador;
+
 import java.util.Objects;
 
 public abstract class Maquina implements Operable {
@@ -27,20 +29,14 @@ public abstract class Maquina implements Operable {
     protected String modelo;
     protected Integer estado;
     protected float horasUso;
+    protected static Integer contadorParaElId = 1000;
 
     //Constructor
-    public Maquina(Integer idMaquina, String modelo, Integer estado, float horasUso) {
-        this.idMaquina = idMaquina;
+    public Maquina(String modelo, Integer estado, float horasUso) {
+        this.idMaquina = contadorParaElId++;
         this.modelo = modelo;
-        this.estado = 0;
-        this.horasUso = 0;
-    }
-    //Cc
-    public Maquina(Maquina otra) {
-        this.idMaquina = otra.idMaquina;
-        this.modelo = otra.modelo;
-        this.estado = 0;
-        this.horasUso = 0;
+        this.estado = estado;
+        this.horasUso = horasUso;
     }
 
     public Integer getIdMaquina() {
@@ -100,11 +96,10 @@ public abstract class Maquina implements Operable {
      * @param horas
      */
     public void trabajar(float horas){
-        if(this.estado == 1){
-            //Primero sumo las horas que se trabaja y despues las sumo a las horasuso aunque se
-            // podria hacer directamente en horasUso
-            horas++;
+        if (this.estado == 1) { // Solo añadiremos horas a la maquina si esta en estado 1, osea encendida
             this.horasUso += horas;
+        } else {
+            IO.println("Error: La máquina debe estar ENCENDIDA para trabajar.");
         }
     }
 
@@ -113,5 +108,7 @@ public abstract class Maquina implements Operable {
      * subclase).
      */
     public abstract void imprimirTipo();
+
+
 }
 

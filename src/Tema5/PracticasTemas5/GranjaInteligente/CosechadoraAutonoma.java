@@ -18,18 +18,13 @@ public class CosechadoraAutonoma extends Maquina {
     private float anchoCorte;
     private float rendimientoToneladasHora;
 
-    public CosechadoraAutonoma(Integer idMaquina, String modelo, Integer estado, float horasUso,
+    public CosechadoraAutonoma(String modelo, Integer estado, float horasUso,
                                float anchoCorte, float rendimientoToneladasHora) {
-        super(idMaquina, modelo, estado, horasUso);
+        super(modelo, estado, horasUso);
         this.anchoCorte = anchoCorte;
         this.rendimientoToneladasHora = rendimientoToneladasHora;
     }
 
-    public CosechadoraAutonoma(CosechadoraAutonoma otra) {
-        super(otra);
-        this.anchoCorte = otra.anchoCorte;
-        this.rendimientoToneladasHora = otra.rendimientoToneladasHora;
-    }
 
     public float getAnchoCorte() {
         return anchoCorte;

@@ -86,12 +86,10 @@ public class Jugador extends Personaje {
      * Si del golpe matas a un monstruo tu experiencia sube 10 por el nivel del monstruo. Además, cada vez que tu
      * experiencia suba una centena (100, 200, 300, …) subes de nivel. El máximo de experiencia será por tanto
      * 1000.
-     *
-     * @return
      */
 
     @Override
-    public int golpear(Personaje personaje) {
+    public void golpear(Personaje personaje) {
         //Golpear
         if (this.armaDerecha != null) {
             personaje.reducirVida(this.getArmaDerecha().getPuntosD());
@@ -126,6 +124,5 @@ public class Jugador extends Personaje {
             }
 
         }
-        return 0;
     }
 }

@@ -53,17 +53,16 @@ public class MonstruoFinalNivel extends Monstruo {
 
     //Metodo golpear editado para el monstruoFinal
     @Override
-    public int golpear(Personaje personaje) {
+    public void golpear(Personaje personaje) {
 
         if (this.usosGolpeEspecial > 0) {
             this.usosGolpeEspecial--;
             personaje.reducirVida(this.golpeEspecial);
             System.out.println(this.nombre + " usa GOLPE ESPECIAL!!!");
-            return this.golpeEspecial;
+        } else{
+            personaje.reducirVida(puntosD);
         }
 
-        //Si se le acaban los golpes especiales tira de ataques normales como el monstruo normal
-        return super.golpear(personaje);
     }
 }
 

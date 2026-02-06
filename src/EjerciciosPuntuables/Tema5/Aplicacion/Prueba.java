@@ -5,6 +5,8 @@ import EjerciciosPuntuables.Tema5.Entidades.Asesino;
 import EjerciciosPuntuables.Tema5.Entidades.Tanque;
 import EjerciciosPuntuables.Tema5.Entidades.Jugador;
 import EjerciciosPuntuables.Tema5.Servicio.Equipo;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Prueba {
@@ -70,8 +72,9 @@ public class Prueba {
                     respuesta = sc.nextInt();
                 }while(respuesta < 1 && respuesta > 7);
                 //Controlamos que no pueda poner carácteres el usuario
-            }catch (Exception e){
-                System.out.println("Introduzca un numero válido");
+            }catch (InputMismatchException exc) {
+                sc = new Scanner(System.in);
+                respuesta = -1;
             }
 
             switch (respuesta){
@@ -141,6 +144,7 @@ public class Prueba {
                             IO.println("Nivel medio de acierto en ataques (ej:5%): ");
                             String ataquesAciertos = sc.nextLine();
 
+                            sc.nextLine();
                             IO.println("Número promedio de eliminaciones por encuentro:");
                             int eliminacionesPromedio = sc.nextInt();
 

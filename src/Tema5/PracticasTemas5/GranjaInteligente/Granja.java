@@ -1,5 +1,7 @@
 package Tema5.PracticasTemas5.GranjaInteligente;
 
+import EjerciciosPuntuables.Tema5.Entidades.Jugador;
+
 import java.util.ArrayList;
 
 public class Granja {
@@ -33,17 +35,10 @@ public class Granja {
     private double totalHorasOperacion;
     private ArrayList<Maquina> maquinas;
 
-    protected Granja(String nombre, String ubicacion, double totalHorasOperacion) {
+    protected Granja(String nombre, String ubicacion) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
-        this.totalHorasOperacion = totalHorasOperacion;
-        this.maquinas = new ArrayList<>();
-    }
-
-    protected Granja(Granja otra) {
-        this.nombre = otra.nombre;
-        this.ubicacion = otra.ubicacion;
-        this.totalHorasOperacion = otra.totalHorasOperacion;
+        this.totalHorasOperacion = 0.0;
         this.maquinas = new ArrayList<>();
     }
 
@@ -67,19 +62,19 @@ public class Granja {
         return totalHorasOperacion;
     }
 
-    protected void setTotalHorasOperacion(double totalHorasOperacion) {
-        this.totalHorasOperacion = totalHorasOperacion;
-    }
-
     protected ArrayList<Maquina> getMaquinas() {
         return maquinas;
     }
 
     /**
      * imprimirDatosGranja(): muestra el nombre, la ubicación y el total de horas de operación.
-     * @return
      */
-
+    public void imprimirDatosGranja(){
+        IO.println("GRANJA: ");
+        IO.println("Nombre: " + this.nombre);
+        IO.println("Ubicación: " + this.ubicacion);
+        IO.println("Total horas operacion: " + this.totalHorasOperacion + "h.");
+    }
 
     /**
      * addMaquina(): permite añadir una máquina a la granja.
@@ -94,7 +89,38 @@ public class Granja {
      * máquinas del equipo.
      */
 
-    protected void calcularTotalHoras(){
+    protected double calcularTotalHoras(){
+        double sumaTotal = 0;
+        for (Maquina m : maquinas) {
+            sumaTotal += m.getHorasUso();
+        }
+        this.totalHorasOperacion = sumaTotal;
 
+        return this.totalHorasOperacion;
+    }
+
+
+    //METODOS AÑADIDOS POR MEJORIA
+
+    /**
+     * Añado este metodo para buscar las maquinas por id y añadirle las horas de uso
+     */
+    public Maquina buscarMaquinaPorId(Integer id){
+        for(Maquina m : maquinas){
+            if(m.getIdMaquina().equals(id)){
+                return m;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * listarMaquinas(); lo añado yo para poner menos codigo en el main y que
+     * este metodo ya liste todas las maquinas
+     */
+    public void listarMaquina(){
+        for(Maquina m : maquinas){
+            IO.println(m);
+        }
     }
 }

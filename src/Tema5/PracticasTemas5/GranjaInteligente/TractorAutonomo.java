@@ -18,18 +18,13 @@ public class TractorAutonomo extends Maquina{
     private float potenciaCV;
     private float consumoPorHora;
 
-    public TractorAutonomo(Integer idMaquina, String modelo, Integer estado,
+    public TractorAutonomo(String modelo, Integer estado,
                            float horasUso, float potenciaCV, float consumoPorHora) {
-        super(idMaquina, modelo, estado, horasUso);
+        super(modelo, estado, horasUso);
         this.potenciaCV = potenciaCV;
         this.consumoPorHora = consumoPorHora;
     }
 
-    public TractorAutonomo(TractorAutonomo otra) {
-        super(otra);
-        this.potenciaCV = otra.potenciaCV;
-        this.consumoPorHora = otra.consumoPorHora;
-    }
 
     public float getPotenciaCV() {
         return potenciaCV;

@@ -7,7 +7,7 @@ public class Monstruo extends Personaje {
      * ● puntosD (puntos de daño que hace el monstruo al golpear)
      */
 
-    private int puntosD;
+    protected int puntosD;
 
     public Monstruo(String nombre, Clase clase, int puntosD) {
         super(nombre, clase);
@@ -36,13 +36,10 @@ public class Monstruo extends Personaje {
     /**
      * ● Un método golpear(Jugador jugador): reduce la salud del jugador tanto como sea el valor de la propiedad
      * puntosD del monstruo. Para reducir la salud debes llamar al método correspondiente de la clase Jugador.
-     *
-     * @return
      */
 
     @Override
-    public int golpear(Personaje personaje) {
+    public void golpear(Personaje personaje) {
         personaje.reducirVida(this.puntosD);
-        return this.puntosD;
     }
 }
