@@ -7,54 +7,50 @@ public class NotificacionEmail extends Notificacion{
     private String remitente;
     private boolean tieneAdjuntos;
 
-    public NotificacionEmail(String titulo, String mensaje, String usuario, LocalDateTime fecha, boolean leida, String remitente, boolean tieneAdjuntos) {
-        super(titulo, mensaje, usuario, fecha, leida);
+    public NotificacionEmail(String titulo, String mensaje, String destinatario,
+                             String remitente, boolean tieneAdjuntos) {
+        super(titulo, mensaje, destinatario);
         this.remitente = remitente;
         this.tieneAdjuntos = tieneAdjuntos;
-    }
-
-    //Cc
-    public NotificacionEmail(NotificacionEmail otro) {
-        super(otro);
-        this.remitente = otro.remitente;
-        this.tieneAdjuntos = otro.tieneAdjuntos;
     }
 
     public String getRemitente() {
         return remitente;
     }
 
+    public void setRemitente(String remitente) {
+        this.remitente = remitente;
+    }
+
     public boolean isTieneAdjuntos() {
         return tieneAdjuntos;
     }
 
-    public void setRemitente(String remitente) {
-        this.remitente = remitente;
+    public void setTieneAdjuntos(boolean tieneAdjuntos) {
+        this.tieneAdjuntos = tieneAdjuntos;
     }
 
 
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("NotificacionEmail{");
-        sb.append("remitente='").append(remitente).append('\'');
-        sb.append(", tieneAdjuntos=").append(tieneAdjuntos);
-        sb.append(", titulo='").append(titulo).append('\'');
+        sb.append("titulo='").append(titulo).append('\'');
         sb.append(", mensaje='").append(mensaje).append('\'');
-        sb.append(", usuario='").append(usuario).append('\'');
+        sb.append(", destinatario='").append(destinatario).append('\'');
         sb.append(", fecha=").append(fecha);
         sb.append(", leida=").append(leida);
+        sb.append(", remitente='").append(remitente).append('\'');
+        sb.append(", tieneAdjuntos=").append(tieneAdjuntos);
         sb.append('}');
         return sb.toString();
     }
 
     @Override
     public void enviar() {
-        //De: ,Asunto: ,Mensaje: , Adjuntos:
-        System.out.printf("Email de " + remitente);
-        System.out.printf("Para " + usuario);
-        System.out.println("Asunto: " + titulo);
-        System.out.println("Mensaje: " + mensaje);
-        System.out.println("Adjuntos: " + this.tieneAdjuntos);
+        IO.println("Email De: " + remitente);
+        IO.println("To " + destinatario);
+        IO.println("Asunto: " + titulo);
+        IO.println("Mensaje: " + mensaje);
     }
 
     @Override
@@ -63,11 +59,8 @@ public class NotificacionEmail extends Notificacion{
     }
 
     @Override
-    public int getPrioridad() {
-        if (tieneAdjuntos){
-            return 2;
-        }else {
-            return 1;
-        }
+    public Integer getPrioridad() {
+        return tieneAdjuntos ? 2 : 1;
     }
+
 }

@@ -4,32 +4,52 @@ import java.time.LocalDateTime;
 
 public class NotificacionDeSistema extends Notificacion{
 
-    enum TipoAlerta{
-        INFO,
-        ERROR,
-        SUCCESS
-    }
-
-    private boolean requiereAccion;
     private TipoAlerta tipo;
+    private boolean requiereAccion;
 
-    public NotificacionDeSistema(String titulo, String mensaje, String usuario,
-                                 LocalDateTime fecha,TipoAlerta tipo, boolean leida, boolean requiereAccion) {
-        super(titulo, mensaje, usuario, fecha, leida);
+    public NotificacionDeSistema(String titulo, String mensaje, String destinatario,
+                                 TipoAlerta tipo, boolean requiereAccion) {
+        super(titulo, mensaje, destinatario);
         this.tipo = tipo;
         this.requiereAccion = requiereAccion;
     }
 
-    public NotificacionDeSistema(NotificacionDeSistema otro) {
-        super(otro);
-        this.tipo = otro.tipo;
-        this.requiereAccion = otro.requiereAccion;
+    public TipoAlerta getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoAlerta tipo) {
+        this.tipo = tipo;
+    }
+
+    public boolean isRequiereAccion() {
+        return requiereAccion;
+    }
+
+    public void setRequiereAccion(boolean requiereAccion) {
+        this.requiereAccion = requiereAccion;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("NotificacionDeSistema{");
+        sb.append("titulo='").append(titulo).append('\'');
+        sb.append(", mensaje='").append(mensaje).append('\'');
+        sb.append(", destinatario='").append(destinatario).append('\'');
+        sb.append(", fecha=").append(fecha);
+        sb.append(", leida=").append(leida);
+        sb.append(", tipo=").append(tipo);
+        sb.append(", requiereAccion=").append(requiereAccion);
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override
     public void enviar() {
-        if(requiereAccion){
-            IO.println("Alerta del sistema(ACCION NO REQUERIDA) " + tipo + " -> " + mensaje);
+        if (requiereAccion) {
+            IO.println("Alerta del sistema (ACCION) " + tipo + " -> " + mensaje);
+        } else {
+            IO.println("Alerta del sistema (ACCION NO REQUERIDA) " + tipo + " -> " + mensaje);
         }
     }
 
@@ -45,10 +65,8 @@ public class NotificacionDeSistema extends Notificacion{
     }
 
     @Override
-    public int getPrioridad() {
+    public Integer getPrioridad() {
         if (tipo == TipoAlerta.ERROR) return 4;
         return 2;
     }
-
-
 }
