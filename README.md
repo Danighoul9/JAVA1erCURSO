@@ -80,7 +80,7 @@ Este repositorio se irá actualizando conforme avance el curso.
 
 ## 🙌 Autor
 
-👨‍💻 Daniel
+👨‍💻 Daniel Díaz Campoy
 📚 Estudiante de DAW
 
 ---
