@@ -4,9 +4,8 @@ public class CocheEstandar extends Coche {
 
     private boolean aireAcondicionado;
 
-    public CocheEstandar(String marca, String modelo, String matricula, int anio,
-                         TipoCombustible combustible, TipoCoche tipo,
-                         Double precioBase, boolean aireAcondicionado) {
+    public CocheEstandar(String marca, String modelo, String matricula, int anio, TipoCombustible combustible,
+                         TipoCoche tipo, Double precioBase, boolean aireAcondicionado) {
         super(marca, modelo, matricula, anio, combustible, tipo, precioBase);
         this.aireAcondicionado = aireAcondicionado;
     }
@@ -20,6 +19,23 @@ public class CocheEstandar extends Coche {
     }
 
     @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("CocheEstandar{");
+        sb.append("aireAcondicionado=").append(aireAcondicionado);
+        sb.append(", id=").append(id);
+        sb.append(", marca='").append(marca).append('\'');
+        sb.append(", modelo='").append(modelo).append('\'');
+        sb.append(", matricula='").append(matricula).append('\'');
+        sb.append(", anio=").append(anio);
+        sb.append(", combustible=").append(combustible);
+        sb.append(", tipo=").append(tipo);
+        sb.append(", precioBase=").append(precioBase);
+        sb.append(", disponible=").append(disponible);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
     public double calcularPrecioAlquiler(int dias) {
         double precio = precioBase * dias;
         if (aireAcondicionado) {
@@ -28,20 +44,5 @@ public class CocheEstandar extends Coche {
         return precio;
     }
 
-    @Override
-    public String toString() {
-        return "CocheEstandar{" +
-                "id=" + id +
-                ", marca='" + marca + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", matricula='" + matricula + '\'' +
-                ", anio=" + anio +
-                ", combustible=" + combustible +
-                ", tipo=" + tipo +
-                ", precioBase=" + precioBase +
-                ", aireAcondicionado=" + aireAcondicionado +
-                ", disponible=" + disponible +
-                '}';
-    }
 }
 

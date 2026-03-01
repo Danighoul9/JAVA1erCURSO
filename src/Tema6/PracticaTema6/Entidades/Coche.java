@@ -20,11 +20,11 @@ public abstract class Coche {
     protected Double precioBase;
     protected boolean disponible;
 
-    private static long contadorId = 0L;
+    private static long contadorId = 0;
 
     public Coche(String marca, String modelo, String matricula, int anio,
                  TipoCombustible combustible, TipoCoche tipo, Double precioBase) {
-        this.id = ++contadorId;
+        this.id = contadorId++;
         this.marca = marca;
         this.modelo = modelo;
         this.matricula = matricula;

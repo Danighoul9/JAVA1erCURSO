@@ -35,10 +35,6 @@ public abstract class Persona {
     protected String direccion;
     protected String telefono;
 
-    public Persona() {
-        this.id = UUID.randomUUID().toString();
-    }
-
     public Persona(String nombre, String apellidos, String dni, String email, String direccion, String telefono) {
         this.id = UUID.randomUUID().toString();
         this.nombre = nombre;

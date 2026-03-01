@@ -1,23 +1,30 @@
-package Tema6.PracticaTema6.Entidades;
+package Tema6.PracticaTema6.Servicio;
+
+import Tema6.PracticaTema6.Entidades.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Agencia {
 
-    private List<Coche> coches;
-    private List<Alquiler> alquileres;
+    private ArrayList<Coche> coches;
+    private ArrayList<Alquiler> alquileres;
 
     public Agencia() {
         this.coches = new ArrayList<>();
         this.alquileres = new ArrayList<>();
     }
 
+    public ArrayList<Coche> getCoches() {
+        return coches;
+    }
+
+    public ArrayList<Alquiler> getAlquileres() {
+        return alquileres;
+    }
+
     public void addCoche(Coche c) {
-        if (c != null) {
-            coches.add(c);
-        }
+        coches.add(c);
     }
 
     public void removeCoche(Coche c) {
@@ -52,25 +59,20 @@ public class Agencia {
         throw new NoHayCochesDisponiblesException("No hay coches disponibles del tipo " + tipo);
     }
 
-    public boolean realizarAlquiler(Cliente cliente, TipoCoche tipo,
-                                    LocalDate fechaInicio, LocalDate fechaFin) {
+    public boolean realizarAlquiler(Cliente cliente, TipoCoche tipo, LocalDate fechaInicio, LocalDate fechaFin) {
         try {
             Coche coche = buscarCocheDisponible(tipo);
             Alquiler alquiler = new Alquiler(cliente, coche, fechaInicio, fechaFin);
             alquileres.add(alquiler);
-            System.out.println("Alquiler realizado con éxito.");
+            System.out.println("Alquiler realizado.");
             System.out.println(alquiler.crearEmail());
             return true;
         } catch (NoHayCochesDisponiblesException e) {
             System.out.println(e.getMessage());
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            System.out.println("Error al realizar el alquiler: " + e.getMessage());
         }
         return false;
     }
 
-    public List<Alquiler> getAlquileres() {
-        return alquileres;
-    }
+
 }
 
