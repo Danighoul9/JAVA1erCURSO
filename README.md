@@ -25,7 +25,7 @@ Dentro de cada tema encontrarás:
 * ✅ Soluciones
 * 💡 Pruebas o ejemplos adicionales
 
----
+----
 
 ## 🎯 Objetivo
 
