@@ -1,52 +1,24 @@
-package Tema6.PracticaTema6;
+package Tema6.PracticaTema6.App;
 
 import Tema6.PracticaTema6.Entidades.*;
+import Tema6.PracticaTema6.Servicio.Agencia;
+import Tema6.PracticaTema6.Servicio.Alquiler;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Principal {
 
-    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+public class App {
 
-    public static void main(String[] args) {
-        Agencia agencia = new Agencia();
-        precargarCoches(agencia);
+    private static Scanner sc = new Scanner(System.in);
 
-        Scanner sc = new Scanner(System.in);
-        int opcion;
-
-        do {
-            mostrarMenu();
-            try {
-                System.out.print("Elige una opción: ");
-                opcion = sc.nextInt();
-                sc.nextLine(); // limpiar buffer
-            } catch (InputMismatchException e) {
-                System.out.println("Debes introducir un número.");
-                sc.nextLine();
-                opcion = -1;
-            }
-
-            switch (opcion) {
-                case 1 -> agencia.listarCochesDisponibles();
-                case 2 -> agencia.listarAlquileresActivos();
-                case 3 -> realizarAlquiler(sc, agencia);
-                case 4 -> mostrarIngresosTotales(agencia);
-                case 5 -> System.out.println("Saliendo del programa...");
-                default -> System.out.println("Opción no válida.");
-            }
-
-        } while (opcion != 5);
-
-        sc.close();
-    }
+    //Formato de fecha para facilitarle al usuario
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     private static void mostrarMenu() {
-        System.out.println("\n--- Menú Agencia de Alquiler ---");
+        System.out.println("--- Menú Agencia de Alquiler ---");
         System.out.println("1. Listar Coches disponibles");
         System.out.println("2. Listar Alquileres activos");
         System.out.println("3. Realizar alquiler");
@@ -77,7 +49,7 @@ public class Principal {
         agencia.addCoche(new CochePremium("Ford", "Transit", "1010JJJ", 2018,
                 TipoCombustible.DIESEL, TipoCoche.FURGONETA, 65.0, false, false));
 
-        // Añadimos algunos duplicados con variaciones para llegar a 20
+        // Añadimos algunos duplicados con variaciones para llegar a 20 porque me canse de buscar tantos xd
         agencia.addCoche(new CocheEstandar("Renault", "Mégane", "1212LLL", 2020,
                 TipoCombustible.GASOLINA, TipoCoche.SEDAN, 39.0, true));
         agencia.addCoche(new CocheEstandar("Peugeot", "3008", "1313MMM", 2021,
@@ -99,7 +71,7 @@ public class Principal {
                 TipoCombustible.GASOLINA, TipoCoche.DEPORTIVO, 150.0, true, true));
     }
 
-    private static void realizarAlquiler(Scanner sc, Agencia agencia) {
+    private static void realizarAlquiler(Agencia agencia) {
         try {
             System.out.println("Datos del cliente:");
             System.out.print("Nombre: ");
@@ -116,40 +88,34 @@ public class Principal {
             String telefono = sc.nextLine();
             System.out.print("Licencia de conducir: ");
             String licencia = sc.nextLine();
+            
             System.out.print("Fecha de obtención de licencia (dd/MM/yyyy): ");
-            LocalDate fechaLicencia = leerFecha(sc);
+            System.out.print("Fecha de obtención de licencia (dd/MM/yyyy): ");
+            LocalDate fechaLicencia = LocalDate.parse(IO.readln());
 
             Cliente cliente = new Cliente(nombre, apellidos, dni, email, direccion,
                     telefono, licencia, fechaLicencia);
 
             System.out.println("Tipo de coche deseado (SEDAN, SUV, FURGONETA, DEPORTIVO): ");
-            String tipoStr = sc.nextLine().trim().toUpperCase();
-            TipoCoche tipo = TipoCoche.valueOf(tipoStr);
+            String tipoCar = sc.nextLine().trim().toUpperCase();
+            TipoCoche tipo = TipoCoche.valueOf(tipoCar);
 
             System.out.print("Fecha de inicio del alquiler (dd/MM/yyyy): ");
-            LocalDate fechaInicio = leerFecha(sc);
+            LocalDate fechaInicio = LocalDate.parse(IO.readln());
             System.out.print("Fecha de fin del alquiler (dd/MM/yyyy): ");
-            LocalDate fechaFin = leerFecha(sc);
+            LocalDate fechaFin = LocalDate.parse(IO.readln());
 
             boolean exito = agencia.realizarAlquiler(cliente, tipo, fechaInicio, fechaFin);
             if (!exito) {
                 System.out.println("No se pudo realizar el alquiler.");
+            }else {
+                System.out.println("Alquiler realizado con exito");
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Error en los datos introducidos: " + e.getMessage());
         }
     }
 
-    private static LocalDate leerFecha(Scanner sc) {
-        while (true) {
-            String entrada = sc.nextLine();
-            try {
-                return LocalDate.parse(entrada, FORMATO_FECHA);
-            } catch (DateTimeParseException e) {
-                System.out.print("Formato de fecha inválido. Usa dd/MM/yyyy: ");
-            }
-        }
-    }
 
     private static void mostrarIngresosTotales(Agencia agencia) {
         LocalDate hoy = LocalDate.now();
@@ -161,5 +127,34 @@ public class Principal {
         }
         System.out.println("Ingresos totales por alquileres completados: " + total + " €");
     }
-}
 
+    public static void main(String[] args) {
+        Agencia agencia = new Agencia();
+        precargarCoches(agencia);
+
+        int opcion;
+
+        do {
+            mostrarMenu();
+            try {
+                System.out.print("Elige una opción: ");
+                opcion = sc.nextInt();
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Debes introducir un número.");
+                sc.nextLine();
+                opcion = -1;
+            }
+
+            switch (opcion) {
+                case 1 -> agencia.listarCochesDisponibles();
+                case 2 -> agencia.listarAlquileresActivos();
+                case 3 -> realizarAlquiler(agencia);
+                case 4 -> mostrarIngresosTotales(agencia);
+                case 5 -> System.out.println("GRACIAS POR USAR NUESTRO PROGRAMA");
+                default -> System.out.println("Opción no válida.");
+            }
+
+        } while (opcion != 5);
+    }
+}
