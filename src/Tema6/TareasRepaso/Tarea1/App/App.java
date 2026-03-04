@@ -1,8 +1,8 @@
-package Tema6.TareaRepaso.App;
+package Tema6.TareasRepaso.Tarea1.App;
 
-import Tema6.TareaRepaso.Entidades.Equipamiento;
-import Tema6.TareaRepaso.Entidades.RopaDeportiva;
-import Tema6.TareaRepaso.Servicios.Tienda;
+import Tema6.TareasRepaso.Tarea1.Entidades.Equipamiento;
+import Tema6.TareasRepaso.Tarea1.Entidades.RopaDeportiva;
+import Tema6.TareasRepaso.Tarea1.Servicios.Tienda;
 
 public class App {
 

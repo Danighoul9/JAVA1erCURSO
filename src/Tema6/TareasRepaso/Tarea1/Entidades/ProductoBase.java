@@ -1,4 +1,4 @@
-package Tema6.TareaRepaso.Entidades;
+package Tema6.TareasRepaso.Tarea1.Entidades;
 
 import java.util.Objects;
 import java.util.UUID;

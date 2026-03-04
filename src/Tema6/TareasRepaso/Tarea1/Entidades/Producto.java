@@ -1,4 +1,4 @@
-package Tema6.TareaRepaso.Entidades;
+package Tema6.TareasRepaso.Tarea1.Entidades;
 
 public interface Producto {
 

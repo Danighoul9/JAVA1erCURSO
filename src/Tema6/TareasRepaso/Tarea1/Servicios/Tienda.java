@@ -1,8 +1,8 @@
-package Tema6.TareaRepaso.Servicios;
+package Tema6.TareasRepaso.Tarea1.Servicios;
 
-import Tema6.TareaRepaso.Entidades.Compra;
-import Tema6.TareaRepaso.Entidades.Producto;
-import Tema6.TareaRepaso.Entidades.ProductoBase;
+import Tema6.TareasRepaso.Tarea1.Entidades.Compra;
+import Tema6.TareasRepaso.Tarea1.Entidades.Producto;
+import Tema6.TareasRepaso.Tarea1.Entidades.ProductoBase;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

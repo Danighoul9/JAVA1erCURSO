@@ -1,4 +1,4 @@
-package Tema6.TareaRepaso.Servicios;
+package Tema6.TareasRepaso.Tarea1.Servicios;
 
 public class StockInsuficienteException extends RuntimeException {
     public StockInsuficienteException(String codigo) {
