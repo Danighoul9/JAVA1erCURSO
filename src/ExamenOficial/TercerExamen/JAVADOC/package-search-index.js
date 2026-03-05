@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"ExamenOficial.TercerExamen.TercerExamen.App"},{"l":"ExamenOficial.TercerExamen.TercerExamen.Entidades"},{"l":"ExamenOficial.TercerExamen.TercerExamen.Servicio"}];updateSearchResults();
