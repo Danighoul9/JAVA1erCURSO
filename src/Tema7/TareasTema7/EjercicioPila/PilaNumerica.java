@@ -1,4 +1,4 @@
-package Tema7.TareasTema7.EjercicioPila.Enunciado;
+package Tema7.TareasTema7.EjercicioPila;
 
 
 import java.util.ArrayList;

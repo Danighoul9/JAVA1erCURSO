@@ -107,7 +107,7 @@ public class Clinica {
      */
 
     public boolean registrarConsulta(Long idAnimal, String veterinario, LocalDate fecha,
-                                     TipoConsulta tipo, String diagnostico, String tratamiento){
+                                     TipoConsulta tipo, String diagnostico, String tratamiento) throws AnimalNoEncontradoException {
         boolean regristrada= false;
         if (fecha.isAfter(LocalDate.now())){
             throw new IllegalArgumentException("ERROR: La fecha no puede ser posterior al dia de hoy.");

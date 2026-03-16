@@ -108,6 +108,6 @@ public class App {
                 IO.println("ERROR: " + e.getMessage());
             }
 
-        } while (opcion != 4);
+        } while (opcion != 7);
     }
 }
