@@ -1,4 +1,4 @@
-package Tema7.Comparable;
+package Tema7.FormasDeComparar.Comparable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
