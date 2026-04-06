@@ -83,7 +83,15 @@ public class ConsultasStream {
                 .collect(Collectors.groupingBy(c -> c.getArtista().getPais(), Collectors.counting()));
         cancionesPorPais.forEach((pais, count) -> IO.println(pais + ": " + count + " canciones"));
 
-        //FALTAN EL 6 Y EL 12
+        //6. Muestra las canciones agrupadas por género, cuántas por cada uno.
+        Map<Genero, Long> generos = canciones.stream()
+                .collect(Collectors.groupingBy(Cancion::getGenero, Collectors.counting()));
+        generos.forEach((genero, count) -> IO.println(genero + ": " + count + " canciones"));
+
+        //12. Muestra el promedio de popularidad por género.
+        Map<Genero, Double> generosProm = canciones.stream()
+                .collect(Collectors.groupingBy(Cancion::getGenero, Collectors.averagingDouble(Cancion::getPopularidad)));
+        generosProm.forEach((genero, prom) -> IO.println(genero + ": " + prom));
 
 
     }
