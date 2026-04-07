@@ -3,13 +3,14 @@ package Tema7.Tema7_I.Practica1Tema7.Entities;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode(of = {"socio", "actividad", "fechaReserva"})
-public class Reserva {
+public class Reserva extends HashSet<Reserva> {
 
     private Socio socio;
     private Actividad actividad;

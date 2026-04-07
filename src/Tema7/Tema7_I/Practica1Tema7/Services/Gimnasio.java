@@ -9,9 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.TreeMap;
+import java.util.*;
 
 @Getter
 @Setter
@@ -84,10 +82,11 @@ public class Gimnasio {
     }
 
     /**
-     *  reservarActividad(String dni, String codigoActividad) Crea una reserva solo si
-     * el aforo no está completo y el socio no tiene ya una reserva activa para esa misma actividad.
+     * Crea una reserva solo si el aforo no está completo y el
+     * socio no tiene ya una reserva activa para esa misma actividad.
+     * @param dni
+     * @param codigoActividad
      */
-
     public void reservarActividad(String dni, String codigoActividad){
         Socio s = socios.get(dni);
         Actividad a = actividades.get(codigoActividad);
@@ -106,15 +105,102 @@ public class Gimnasio {
             }
         }
 
-        // Crear reserva BIEN
+        // Crear reserva
         Reserva nueva = new Reserva(s, a, LocalDate.now(), false);
 
+        HashSet<Reserva> put = reservas.put(s, nueva);
 
-        System.out.println("OK");
+
+        System.out.println("Reserva realizada con exito!");
 
     }
 
+    /**
+     * Elimina la reserva activa de ese socio para esa actividad.
+     * @param dni
+     * @param codigoActividad
+     */
+    public void cancelarReserva(String dni, String codigoActividad){
+        Socio s = socios.get(dni);
+        Actividad a = actividades.get(codigoActividad);
 
+        if(s == null || a == null){
+            System.out.println("No existe el socio o la actividad");
+            return;
+        }
+
+        // Comprobar si tiene esta actividad y cancelarla
+        for(Reserva r : reservas.get(s)){
+            if(r.getActividad().equals(a) && r.estaActiva()){
+                reservas.remove(r);
+                IO.println("Reserva cancelada con exito!");
+                return;
+            }
+        }
+
+    }
+
+    /**
+     * Devuelve un TreeSet<Actividad> con todas las actividades reservadas
+     * por el socio, ordenadas por día y hora.
+     * @param dni
+     * @return
+     */
+    public TreeSet<Actividad> getActividadesSocio(String dni){
+
+        TreeSet<Actividad> resultado = new TreeSet<>();
+
+        Socio socio = socios.get(dni);
+
+        if (socio != null && reservas.containsKey(socio)) {
+            for (Reserva r : reservas.get(socio)) {
+                if (r.estaActiva()) {
+                    resultado.add(r.getActividad());
+                }
+            }
+        }else {
+            IO.println("No hay actividades relacionadas con el socio con dni || " + dni + " ||");
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Devuelve las actividades cuyo número de reservas activas ha alcanzado el aforoMaximo.
+     * @return
+     */
+    public Set<Actividad> getActividadesLlenas(){
+
+        Set<Actividad> resultado = new HashSet<>();
+
+        int contador = 0;
+        for(Actividad a : actividades.values()){
+            for(HashSet<Reserva> r : reservas.values()){
+                for (Reserva reserv : r){
+                    if(reserv.getActividad().equals(a) && reserv.estaActiva()){
+                        contador++;
+                    }
+                }
+            }
+            if (contador >= a.getAforoMaximo()){
+                resultado.add(a);
+            }
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Devuelve una List<Socio> ordenada de mayor a menor número de reservas totales realizadas.
+     * Usa un Comparator basado en el tamaño del HashSet de cada socio.
+     */
+    public List<Socio> getRankingSocios(){
+        List<Socio> rankingSocios = new ArrayList<>(reservas.keySet());
+
+        rankingSocios.sort(Comparator.comparing(Socio::getDni));
+
+        return rankingSocios;
+    }
 
 
 }

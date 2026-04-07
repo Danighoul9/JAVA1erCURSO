@@ -1,8 +1,6 @@
 package Tema7.Tema7_I.Practica1Tema7.Entities;
 
 import lombok.*;
-import org.jetbrains.annotations.NotNull;
-
 import java.time.LocalDate;
 import java.util.Comparator;
 
