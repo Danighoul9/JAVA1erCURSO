@@ -1,15 +1,10 @@
 package Tema7.Tema7_II.Ejercicios.eFootball;
 
-import Tema7.Tema7_II.Ejercicios.Pedidos.CategoriaProducto;
-import Tema7.Tema7_II.Ejercicios.Pedidos.Pedido;
-import Tema7.Tema7_II.Ejercicios.Pedidos.Producto;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AnalizadorPartidas {
@@ -103,7 +98,10 @@ public class AnalizadorPartidas {
 
         /* Consulta 6: Partidas de más de 20 minutos
          * Filtrar duracion que contenga "20min" o "30min" */
-
+        partidas.stream()
+                .filter(p -> p.getDuracion() >= 20)
+                .filter(p -> p.getDuracion() >= 30)
+                .forEach(IO::println);
 
         /* Consulta 7: Equipos más usados
          * Los 5 equiposLocal con más apariciones */
