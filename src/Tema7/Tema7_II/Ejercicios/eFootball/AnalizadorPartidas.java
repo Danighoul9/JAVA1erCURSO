@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.toList;
-
 public class AnalizadorPartidas {
     static void main(String[] args) {
         List<Partida> partidas = new ArrayList<>();
