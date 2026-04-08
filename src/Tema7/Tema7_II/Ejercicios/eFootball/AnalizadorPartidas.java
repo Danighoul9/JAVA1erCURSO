@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.toList;
+
 public class AnalizadorPartidas {
     static void main(String[] args) {
         List<Partida> partidas = new ArrayList<>();
@@ -96,24 +99,34 @@ public class AnalizadorPartidas {
         mediaEstrellas.forEach((c,v) ->
                 IO.println("Modo Partida: " + c + ": " + v + " estrellas"));
 
+        IO.println("----------- Partidas de más de 20/30 minutos ------------");
         /* Consulta 6: Partidas de más de 20 minutos
          * Filtrar duracion que contenga "20min" o "30min" */
         partidas.stream()
-                .filter(p -> p.getDuracion() >= 20)
-                .filter(p -> p.getDuracion() >= 30)
+                .filter(p -> p.getDuracion().equals("20min") || p.getDuracion().equals("30min"))
                 .forEach(IO::println);
 
+        IO.println("----------- Equipos más usados ------------");
         /* Consulta 7: Equipos más usados
          * Los 5 equiposLocal con más apariciones */
 
-
-
+        IO.println("----------- Peor racha (3+ derrotas seguidas) ------------");
         /* Consulta 8: Peor racha (3+ derrotas seguidas)
          * Partidas perdidas ordenadas por fecha (golesLocal < golesVisitante) */
+        List<Partida> derrotas = partidas.stream()
+                .filter(p -> p.getGolesLocal() < p.getGolesVisitante())
+                .sorted(Comparator.comparing(Partida::getFecha))
+                .toList();
 
+        derrotas.forEach(IO::println);
 
+        IO.println("----------- Evolución mensual ------------");
         /* Consulta 9: Evolución mensual
          * Agrupar por mes de fecha y contar victorias */
+
+
+
+
     }
 
 }
