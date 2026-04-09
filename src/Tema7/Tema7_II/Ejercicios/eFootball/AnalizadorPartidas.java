@@ -120,7 +120,9 @@ public class AnalizadorPartidas {
         IO.println("----------- Evolución mensual ------------");
         /* Consulta 9: Evolución mensual
          * Agrupar por mes de fecha y contar victorias */
-
+        partidas.stream()
+                .filter(p -> p.getGolesLocal() > p.getGolesVisitante())
+                .collect(Collectors.groupingBy(Partida::getModoJuego));
 
 
 
