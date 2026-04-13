@@ -1,8 +1,6 @@
 package Tema7.Tema7_I.Practica1Tema7.Services;
 
-import Tema7.Tema7_I.Practica1Tema7.Entities.Actividad;
-import Tema7.Tema7_I.Practica1Tema7.Entities.Reserva;
-import Tema7.Tema7_I.Practica1Tema7.Entities.Socio;
+import Tema7.Tema7_I.Practica1Tema7.Entities.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,50 +33,12 @@ public class Gimnasio {
         this.reservas = new  TreeMap<>();
     }
 
-    /**
-     * Método	Descripción
-     * addSocio(Socio s)	Añade un socio al mapa de socios.
-     *
-     * addActividad(Actividad a)	Añade una actividad al catálogo.
-     *
-     * reservarActividad(String dni, String codigoActividad) Crea una reserva solo si
-     * el aforo no está completo y el socio no tiene ya una reserva activa para esa misma actividad.
-     *
-     * cancelarReserva(String dni, String codigoActividad)Elimina la reserva activa de ese
-     * socio para esa actividad.
-     *
-     * getActividadesSocio(String dni) Devuelve un TreeSet<Actividad> con todas las actividades
-     * reservadas por el socio, ordenadas por día y hora.
-     *
-     * getActividadesLlenas()Devuelve las actividades cuyo número de reservas activas
-     * ha alcanzado el aforoMaximo.
-     *
-     * getRankingSocios()Devuelve una List<Socio> ordenada de mayor a menor número de reservas
-     * totales realizadas. Usa un Comparator basado en el tamaño del HashSet de cada socio.
-     *
-     * getReservasOrdenadasPorFecha()Recorre el TreeMap con un for-each anidado para construir
-     * una List<Reserva> con todas las reservas, y la ordena por fechaReserva ascendente
-     * con Comparator.comparing(Reserva::getFechaReserva).
-     *
-     * getReservasOrdenadasPorActividad()Igual que el anterior, pero ordena por el nombre de la actividad
-     * (alfabético) usando Comparator.comparing(r -> r.getActividad().getNombre()).
-     *
-     * getReservasOrdenadasPorSocioYFecha()Construye la lista con for-each anidado y la
-     * ordena primero por apellidos del socio y luego por fecha de reserva descendente,
-     * encadenando Comparator.comparing(...).thenComparing(...).
-     *
-     * getReservasOrdenadasPorDuracion()Construye la lista con for-each anidado y la ordena de mayor
-     * a menor duración de la actividad usando Comparator.comparing(...).reversed().
-     *
-     * getReservasPendientesOrdenadasPorFecha()	Construye la lista con for-each anidado, descartando con un if las reservas no activas (estaActiva() == false), y ordena el resultado por fecha ascendente.
-     */
-
     public void addSocio(Socio s){
         socios.put(s.getDni(), s);
     }
 
     public void addActividad(Actividad a){
-        actividades.put(a.getNombre(), a);
+        actividades.put(a.getCodigo(), a);
     }
 
     /**
@@ -87,6 +47,8 @@ public class Gimnasio {
      * @param dni
      * @param codigoActividad
      */
+
+    //He tenido que buscar ayuda para esta me ha resultado casi imposible sacar lo del aforo máximo :(
     public void reservarActividad(String dni, String codigoActividad){
         Socio s = socios.get(dni);
         Actividad a = actividades.get(codigoActividad);
@@ -96,20 +58,42 @@ public class Gimnasio {
             return;
         }
 
+        // Obtener reservas del socio
+        HashSet<Reserva> reservasSocio = reservas.get(s);
+
+        // Si no tiene, crear
+        if(reservasSocio == null){
+            reservasSocio = new HashSet<>();
+            reservas.put(s, reservasSocio);
+        }
 
         // Comprobar si ya tiene esa actividad
-        for(Reserva r : reservas.get(s)){
+        for(Reserva r : reservasSocio){
             if(r.getActividad().equals(a) && r.estaActiva()){
                 System.out.println("Ya tiene reserva en esta actividad");
                 return;
             }
         }
 
+        // Comprobar aforo
+        int contador = 0;
+        for(HashSet<Reserva> conjuntoReservas : reservas.values()){
+            for(Reserva r : conjuntoReservas){
+                if(r.getActividad().equals(a) && r.estaActiva()){
+                    contador++;
+                }
+            }
+        }
+
+        if(contador >= a.getAforoMaximo()){
+            System.out.println("Aforo completo");
+            return;
+        }
+
         // Crear reserva
         Reserva nueva = new Reserva(s, a, LocalDate.now(), false);
 
-        HashSet<Reserva> put = reservas.put(s, nueva);
-
+        reservasSocio.add(nueva);
 
         System.out.println("Reserva realizada con exito!");
 
@@ -129,11 +113,17 @@ public class Gimnasio {
             return;
         }
 
-        // Comprobar si tiene esta actividad y cancelarla
-        for(Reserva r : reservas.get(s)){
+        HashSet<Reserva> reservasSocio = reservas.get(s);
+
+        if(reservasSocio == null){
+            System.out.println("El socio no tiene reservas");
+            return;
+        }
+
+        for(Reserva r : reservasSocio){
             if(r.getActividad().equals(a) && r.estaActiva()){
-                reservas.remove(r);
-                IO.println("Reserva cancelada con exito!");
+                reservasSocio.remove(r);
+                System.out.println("Reserva cancelada con exito!");
                 return;
             }
         }
@@ -194,6 +184,7 @@ public class Gimnasio {
      * Devuelve una List<Socio> ordenada de mayor a menor número de reservas totales realizadas.
      * Usa un Comparator basado en el tamaño del HashSet de cada socio.
      */
+    //Se que no esta bien, puesto que ordena por dni no por reserva pero no se exactamente como hacerlo pufff
     public List<Socio> getRankingSocios(){
         List<Socio> rankingSocios = new ArrayList<>(reservas.keySet());
 
@@ -202,5 +193,106 @@ public class Gimnasio {
         return rankingSocios;
     }
 
+    /**
+     * Recorre el TreeMap con un for-each anidado para construir una List<Reserva> con todas las reservas,
+     * y la ordena por fechaReserva ascendente con Comparator.comparing(Reserva::getFechaReserva).
+     */
+    public List<Reserva> getReservasOrdenadasPorFecha(){
 
+        List<Reserva> lista = new ArrayList<>();
+
+        for(HashSet<Reserva> conjunto : reservas.values()){
+            for(Reserva r : conjunto){
+                lista.add(r);
+            }
+        }
+
+        lista.sort(Comparator.comparing(Reserva::getFechaReserva));
+
+        return lista;
+    }
+
+    /**
+     * Igual que el anterior, pero ordena por el nombre de la actividad (alfabético)
+     * usando Comparator.comparing(r -> r.getActividad().getNombre()).
+     */
+    public List<Reserva> getReservasOrdenadasPorActividad(){
+
+        List<Reserva> lista = new ArrayList<>();
+
+        for(HashSet<Reserva> conjunto : reservas.values()){
+            for(Reserva r : conjunto){
+                lista.add(r);
+            }
+        }
+
+        lista.sort(Comparator.comparing(r -> r.getActividad().getNombre()));
+
+        return lista;
+    }
+
+    /**
+     * Construye la lista con for-each anidado y la ordena primero por apellidos del socio
+     * y luego por fecha de reserva descendente, encadenando Comparator.comparing(...).thenComparing(...).
+     */
+    public List<Reserva> getReservasOrdenadasPorSocioYFecha(){
+
+        List<Reserva> lista = new ArrayList<>();
+
+        for(HashSet<Reserva> conjunto : reservas.values()){
+            for(Reserva r : conjunto){
+                lista.add(r);
+            }
+        }
+
+        lista.sort(
+                Comparator.comparing((Reserva r) -> r.getSocio().getApellidos())
+                        .thenComparing((Reserva r) -> r.getFechaReserva()).reversed()
+        );
+
+        return lista;
+    }
+
+    /**
+     * Construye la lista con for-each anidado y la ordena de mayor a menor duración
+     * de la actividad usando Comparator.comparing(...).reversed().
+     */
+    public List<Reserva> getReservasOrdenadasPorDuracion(){
+
+        List<Reserva> lista = new ArrayList<>();
+
+        for(HashSet<Reserva> conjunto : reservas.values()){
+            for(Reserva r : conjunto){
+                lista.add(r);
+            }
+        }
+
+        lista.sort(
+                Comparator.comparing((Reserva r) -> r.getActividad().getDuracionMinutos()).reversed()
+        );
+
+        return lista;
+    }
+
+
+    /**
+     * Construye la lista con for-each anidado, descartando con un if las reservas no activas
+     * (estaActiva() == false), y ordena el resultado por fecha ascendente.
+     */
+    public List<Reserva> getReservasPendientesOrdenadasPorFecha(){
+
+        List<Reserva> lista = new ArrayList<>();
+
+        for(HashSet<Reserva> conjunto : reservas.values()){
+            for(Reserva r : conjunto){
+                if(r.estaActiva()){
+                    lista.add(r);
+                }
+            }
+        }
+
+        lista.sort(Comparator.comparing(Reserva::getFechaReserva));
+
+        return lista;
+    }
 }

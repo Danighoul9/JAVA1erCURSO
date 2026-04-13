@@ -14,7 +14,7 @@ import java.util.Comparator;
 
 public class Actividad implements Comparable<Actividad> {
 
-    private Integer codigo;
+    private String codigo;
     private String nombre;
     private String descripcion;
     private diaSemana diaSemana;
