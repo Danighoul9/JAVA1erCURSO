@@ -16,7 +16,6 @@ Cada carpeta corresponde a un tema o unidad del curso:
 📁 Tema05_Funciones
 📁 Tema06_POO
 📁 Tema07_Ficheros
-📁 Tema08_Excepciones
 ```
 
 Dentro de cada tema encontrarás:
