@@ -45,7 +45,6 @@ Este repositorio tiene como objetivo:
 ✔️ Arrays y colecciones
 ✔️ Programación orientada a objetos (POO)
 ✔️ Manejo de ficheros
-✔️ Excepciones
 
 ---
 
